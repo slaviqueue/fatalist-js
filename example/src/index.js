@@ -1,4 +1,4 @@
-import StateMachine from '../../src'
+import StateMachine, { bindMappings } from '../../src'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
@@ -17,9 +17,7 @@ stater.addTransition('IDLE_STATE', 'LOADING_STATE', 'load')
 stater.addTransition('LOADING_STATE', 'LOADED_STATE', 'loaded')
 stater.addTransition('LOADED_STATE', 'LOADED_STATE', 'loaded')
 
-const getButtonText = StateMachine
-    .bindMappings(buttonTextMappings)
-    .withDefault('Load stuff')
+const getButtonText = bindMappings(buttonTextMappings).withDefault('Load stuff')
 
 stater.subscribe(state => {
     button.textContent = getButtonText(state)
