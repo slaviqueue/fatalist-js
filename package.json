@@ -1,11 +1,15 @@
 {
   "name": "fatalist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simple state manager based on state machines",
   "main": "./main/index.js",
   "scripts": {
     "start": "webpack --watch",
     "test": "./node_modules/.bin/mocha \"tests\"  --compilers js:@babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electricSemyon/fatalist-js"
   },
   "author": "slaviqueue",
   "license": "ISC",
