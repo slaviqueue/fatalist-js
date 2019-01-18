@@ -1,3 +1,7 @@
-import StateMachine from './StateMachine'
+import StateMachine, { bindMappings } from './StateMachine'
+
+export {
+    bindMappings
+}
 
 export default StateMachine
