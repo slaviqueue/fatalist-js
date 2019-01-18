@@ -75,7 +75,7 @@ You may be wondering, how will we handle side effects? There's a trigger mechani
 stater.setTrigger('load', () =>
     fetch('https://jsonplaceholder.typicode.com/todos/1')
         .then(response => response.json())
-        .then(data => span.textContent = JSON.stringify(data.title))
+        .then(data => span.textContent = data.title)
         .then(_ => stater.dispatch('loaded')))
 ```
 
