@@ -15,7 +15,7 @@ class StateMachine {
     addState(stateName) {
         this.states[stateName] = {
             on: {}
-        };
+        }
     }
 
     addTransition(from, to, message) {
