@@ -22,7 +22,7 @@ Simple markup:
 Find our button and span in DOM.
 
 ```javascript
-import StateMachine, { bindMappings } from '../../src'
+import StateMachine, { bindMappings } from 'fatalist'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
