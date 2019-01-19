@@ -29,7 +29,7 @@ const button = document.querySelector('button')
 const span = document.querySelector('span')
 ```
 
-Then initialize our state machine with some initial state
+Then create our state machine with some initial state
 ```javascript
 const stater = new StateMachine('IDLE_STATE')
 ```
@@ -38,9 +38,9 @@ Then we're going to describe our machine states and transitions between them.
 
 To do that we'll use `addState` and `addTransition` methods.
 
-`addState` applies just a name of addable state.
+`addState` takes just a name of addable state.
 
-`addTransition` takes three arguments: `from`, `to` and `action`. First two are pretty obvious. Third one is some king of action, which should be fired to make the transition.
+`addTransition` takes three arguments: `from`, `to` and `action`. First two are pretty obvious. Third one is some king of action, which should be fired to perform a transition.
 
 Notice, that if we want to reload data, we will make a transition from ```LOADED_STATE``` to ```LOADING_STATE```.
 ```javascript
