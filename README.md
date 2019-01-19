@@ -1,6 +1,7 @@
 ![](fatalist-logo.png)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Build Status](https://travis-ci.org/electricSemyon/fatalist-js.svg?branch=master)](https://travis-ci.org/electricSemyon/fatalist-js)
 
 Another one js state management library based on state machines.
 
