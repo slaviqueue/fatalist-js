@@ -5,7 +5,8 @@
   "main": "./main/index.js",
   "scripts": {
     "start": "webpack --watch",
-    "test": "./node_modules/.bin/mocha \"tests\"  --compilers js:@babel/register"
+    "test": "./node_modules/.bin/mocha \"tests\"  --compilers js:@babel/register",
+    "test-coverage": "nyc --reporter=text npm test"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "npm": "^6.5.0",
+    "nyc": "^13.1.0",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
   }
