@@ -42,14 +42,14 @@ To do that we'll use `addState` and `addTransition` methods.
 
 `addTransition` takes three arguments: `from`, `to` and `action`. First two are pretty obvious. Third one is some king of action, which should be fired to make the transition.
 
-Notice, that if we want to reload data, we will make a transition from ```LOADED_STATE``` to the same ```LOADED_STATE```.
+Notice, that if we want to reload data, we will make a transition from ```LOADED_STATE``` to ```LOADING_STATE```.
 ```javascript
 stater.addState('IDLE_STATE')
 stater.addState('LOADING_STATE')
 stater.addState('LOADED_STATE')
 stater.addTransition('IDLE_STATE', 'LOADING_STATE', 'load')
 stater.addTransition('LOADING_STATE', 'LOADED_STATE', 'loaded')
-stater.addTransition('LOADED_STATE', 'LOADED_STATE', 'loaded')
+stater.addTransition('LOADED_STATE', 'LOADING_STATE', 'load')
 ```
 Of course we want to react on state changing in some way. So let's change the text inside button. We'll make it in a declarative way, by mapping texts to states.
 ```javascript
