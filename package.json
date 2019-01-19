@@ -1,8 +1,8 @@
 {
   "name": "fatalist",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "simple state manager based on state machines",
-  "main": "./main/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "webpack --watch",
     "test": "./node_modules/.bin/mocha \"tests\"  --compilers js:@babel/register",

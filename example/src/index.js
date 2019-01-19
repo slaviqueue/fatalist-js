@@ -1,4 +1,4 @@
-import StateMachine, { bindMappings } from '../../src'
+import StateMachine, { bindMappings } from 'fatalist'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
@@ -10,17 +10,23 @@ const buttonTextMappings = {
     LOADED_STATE: 'Here u go',
 }
 
+const buttonDisablingMappings = {
+    LOADING_STATE: true,
+}
+
 stater.addState('IDLE_STATE')
 stater.addState('LOADING_STATE')
 stater.addState('LOADED_STATE')
 stater.addTransition('IDLE_STATE', 'LOADING_STATE', 'load')
 stater.addTransition('LOADING_STATE', 'LOADED_STATE', 'loaded')
-stater.addTransition('LOADED_STATE', 'LOADED_STATE', 'loaded')
+stater.addTransition('LOADED_STATE', 'LOADING_STATE', 'load')
 
 const getButtonText = bindMappings(buttonTextMappings).withDefault('Load stuff')
+const getIsButtonDisabled = bindMappings(buttonDisablingMappings).withDefault(false)
 
 stater.subscribe(state => {
     button.textContent = getButtonText(state)
+    button.disabled = getIsButtonDisabled(state)
 })
 
 stater.setTrigger('load', () =>
