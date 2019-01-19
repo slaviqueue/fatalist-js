@@ -22,7 +22,7 @@ Simple markup:
 Find our button and span in DOM.
 
 ```javascript
-import StateMachine, { bindMappings } from '../../src'
+import StateMachine, { bindMappings } from 'fatalist'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
@@ -75,7 +75,7 @@ You may be wondering, how will we handle side effects? There's a trigger mechani
 stater.setTrigger('load', () =>
     fetch('https://jsonplaceholder.typicode.com/todos/1')
         .then(response => response.json())
-        .then(data => span.textContent = JSON.stringify(data.title))
+        .then(data => span.textContent = data.title)
         .then(_ => stater.dispatch('loaded')))
 ```
 
