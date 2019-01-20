@@ -1,6 +1,6 @@
 {
   "name": "fatalist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple state manager based on state machines",
   "main": "./src/index.js",
   "keywords": [
