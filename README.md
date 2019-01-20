@@ -73,11 +73,13 @@ stater.subscribe(state => {
 
 You may be wondering, how will we handle side effects? There's a trigger mechanism in Fatalist. It's kinda similar to commands in Elm. We are reacting on some event by putting a trigger on it. It will be fired on a state change.
 ```javascript
-stater.setTrigger('load', () =>
+const onLoadTrigger = stateMachine =>
     fetch('https://jsonplaceholder.typicode.com/todos/1')
         .then(response => response.json())
         .then(data => span.textContent = data.title)
-        .then(_ => stater.dispatch('loaded')))
+        .then(_ => stateMachine.dispatch('loaded'))
+
+stater.setTrigger('load', onLoadTrigger)
 ```
 
 Put click listener on our button.
