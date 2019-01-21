@@ -30,7 +30,7 @@ class StateMachine {
             return
         
         if (this.triggers[message])
-            this.triggers[message].forEach(cb => cb(this))
+            this.triggers[message].forEach(cb => cb(this.currentState, this.dispatch))
 
         this.currentState = newState
 

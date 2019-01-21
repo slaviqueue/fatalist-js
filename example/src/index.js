@@ -29,11 +29,11 @@ stater.subscribe(state => {
     button.disabled = getIsButtonDisabled(state)
 })
 
-const onLoadTrigger = stateMachine =>
+const onLoadTrigger = (currentState, dispatch) =>
     fetch('https://jsonplaceholder.typicode.com/todos/1')
         .then(response => response.json())
         .then(data => span.textContent = data.title)
-        .then(_ => stateMachine.dispatch('loaded'))
+        .then(_ => dispatch('loaded'))
 
 stater.setTrigger('load', onLoadTrigger)
 
