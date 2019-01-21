@@ -29,11 +29,12 @@ stater.subscribe(state => {
     button.disabled = getIsButtonDisabled(state)
 })
 
-stater.setTrigger('load', () =>
+const onLoadTrigger = stateMachine =>
     fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => (new Promise(resolve => setTimeout(() => resolve(response), 500)))) // little delay to see results
         .then(response => response.json())
-        .then(data => span.textContent = JSON.stringify(data.title))
-        .then(_ => stater.dispatch('loaded')))
+        .then(data => span.textContent = data.title)
+        .then(_ => stateMachine.dispatch('loaded'))
+
+stater.setTrigger('load', onLoadTrigger)
 
 button.addEventListener('click', () => stater.dispatch('load'))

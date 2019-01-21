@@ -6,10 +6,11 @@ class StateMachine {
         this.addState(initialState)
 
         this.observers = []
-
         this.triggers = {}
 
         setTimeout(() => this._triggerObservers())
+
+        this.dispatch = this.dispatch.bind(this)
     }
 
     addState(stateName) {
@@ -29,7 +30,7 @@ class StateMachine {
             return
         
         if (this.triggers[message])
-            this.triggers[message].forEach(cb => cb(message))
+            this.triggers[message].forEach(cb => cb(this))
 
         this.currentState = newState
 
