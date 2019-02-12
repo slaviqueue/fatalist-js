@@ -2,7 +2,18 @@ import StateMachine, { bindMappings } from 'fatalist'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
-const stater = new StateMachine('IDLE_STATE')
+
+const stater = new StateMachine('IDLE_STATE', {
+    IDLE_STATE: {
+        load: 'LOADING_STATE',
+    },
+    LOADING_STATE: {
+        loaded: 'LOADED_STATE',
+    },
+    LOADED_STATE: {
+        load: 'LOADING_STATE',
+    }
+})
 
 const buttonTextMappings = {
     IDLE_STATE: 'Load stuff',
@@ -13,13 +24,6 @@ const buttonTextMappings = {
 const buttonDisablingMappings = {
     LOADING_STATE: true,
 }
-
-stater.addState('IDLE_STATE')
-stater.addState('LOADING_STATE')
-stater.addState('LOADED_STATE')
-stater.addTransition('IDLE_STATE', 'LOADING_STATE', 'load')
-stater.addTransition('LOADING_STATE', 'LOADED_STATE', 'loaded')
-stater.addTransition('LOADED_STATE', 'LOADING_STATE', 'load')
 
 const getButtonText = bindMappings(buttonTextMappings).withDefault('Load stuff')
 const getIsButtonDisabled = bindMappings(buttonDisablingMappings).withDefault(false)

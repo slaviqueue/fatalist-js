@@ -1,9 +1,7 @@
 class StateMachine {
-    constructor(initialState) {
+    constructor(initialState, states) {
         this.currentState = initialState
-        this.states = {}
-
-        this.addState(initialState)
+        this.states = states
 
         this.observers = []
         this.triggers = {}
@@ -11,16 +9,6 @@ class StateMachine {
         setTimeout(() => this._triggerObservers())
 
         this.dispatch = this.dispatch.bind(this)
-    }
-
-    addState(stateName) {
-        this.states[stateName] = {
-            on: {}
-        }
-    }
-
-    addTransition(from, to, message) {
-        this.states[from].on[message] = to
     }
 
     dispatch(message) {
@@ -49,7 +37,7 @@ class StateMachine {
     }
 
     _getNewState(message) {
-        return this.states[this.currentState].on[message]
+        return this.states[this.currentState][message]
     }
 
     _triggerObservers() {
