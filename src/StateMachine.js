@@ -1,10 +1,10 @@
 class StateMachine {
-    constructor(initialState, states) {
+    constructor(initialState, initialData, states) {
         this.currentState = initialState
         this.states = states
-
         this.observers = []
-        this.triggers = {}
+
+        this.data = initialData;
 
         setTimeout(() => this._triggerObservers())
 
@@ -12,24 +12,26 @@ class StateMachine {
     }
 
     dispatch(message) {
-        const newState = this._getNewState(message)
+        const transition = this._getNewState(message)
+        const isTransitionWithCommand = Array.isArray(transition)
+        const newState = isTransitionWithCommand
+            ? transition[0]
+            : transition
 
         if (!newState)
             return
-        
-        if (this.triggers[message])
-            this.triggers[message].forEach(cb => cb(this.currentState, this.dispatch))
+
+        if (isTransitionWithCommand) {
+            const [request, transitionOnResolve] = transition[1]
+
+            request()
+                .then(data => this.data = data)
+                .then(() => this.dispatch(transitionOnResolve))
+        }
 
         this.currentState = newState
 
         this._triggerObservers()
-    }
-
-    setTrigger(message, cb) {
-        if (!this.triggers[message])
-            this.triggers[message] = []
-
-        this.triggers[message].push(cb)
     }
 
     subscribe(cb) {
@@ -37,18 +39,13 @@ class StateMachine {
     }
 
     _getNewState(message) {
+        console.log(this.states, message, this.currentState)
         return this.states[this.currentState][message]
     }
 
     _triggerObservers() {
-        this.observers.forEach(cb => cb(this.currentState))
+        this.observers.forEach(cb => cb(this.currentState, this.data))
     }
 }
-
-export const bindMappings = mappings => ({
-    withDefault(value) {
-        return message => mappings[message] || value
-    }
-})
 
 export default StateMachine

@@ -1,19 +1,29 @@
-import StateMachine, { bindMappings } from 'fatalist'
+import StateMachine, { bindMappings, makeCommand, noOp } from 'fatalist'
 
 const button = document.querySelector('button')
 const span = document.querySelector('span')
 
-const stater = new StateMachine('IDLE_STATE', {
+const fetchUrl = 'https://jsonplaceholder.typicode.com/todos/1'
+const request = () => fetch(fetchUrl)
+    .then(response => response.json())
+
+const loadTodoCommand = makeCommand(request, 'loaded')
+
+const initialState = 'IDLE_STATE'
+const initialData = { title: 'some initial text data' }
+const stateMachineDefinition = ({
     IDLE_STATE: {
-        load: 'LOADING_STATE',
+        load: ['LOADING_STATE', loadTodoCommand],
     },
     LOADING_STATE: {
         loaded: 'LOADED_STATE',
     },
     LOADED_STATE: {
-        load: 'LOADING_STATE',
+        load: ['LOADING_STATE', loadTodoCommand],
     }
 })
+
+const stater = new StateMachine(initialState, initialData, stateMachineDefinition)
 
 const buttonTextMappings = {
     IDLE_STATE: 'Load stuff',
@@ -25,20 +35,19 @@ const buttonDisablingMappings = {
     LOADING_STATE: true,
 }
 
+const spanTextMappings = {
+    LOADED_STATE: (span, data) => span.textContent = data.title
+}
+
 const getButtonText = bindMappings(buttonTextMappings).withDefault('Load stuff')
 const getIsButtonDisabled = bindMappings(buttonDisablingMappings).withDefault(false)
+const setSpanText = bindMappings(spanTextMappings).withDefault(noOp)
 
-stater.subscribe(state => {
+stater.subscribe((state, data) => {
     button.textContent = getButtonText(state)
     button.disabled = getIsButtonDisabled(state)
+
+    setSpanText(state)(span, data)
 })
-
-const onLoadTrigger = (currentState, dispatch) =>
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then(response => response.json())
-        .then(data => span.textContent = data.title)
-        .then(_ => dispatch('loaded'))
-
-stater.setTrigger('load', onLoadTrigger)
 
 button.addEventListener('click', () => stater.dispatch('load'))
