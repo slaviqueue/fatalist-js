@@ -4,7 +4,7 @@ const button = document.querySelector('button')
 const span = document.querySelector('span')
 
 const fetchUrl = 'https://jsonplaceholder.typicode.com/todos/1'
-const request = () => fetch(fetchUrl)
+const request = data => fetch(fetchUrl)
     .then(response => response.json())
 
 const loadTodoCommand = makeCommand(request, 'loaded')

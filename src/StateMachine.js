@@ -11,7 +11,7 @@ class StateMachine {
         this.dispatch = this.dispatch.bind(this)
     }
 
-    dispatch(message) {
+    dispatch(message, stateChanger) {
         const transition = this._getNewState(message)
         const isTransitionWithCommand = Array.isArray(transition)
         const newState = isTransitionWithCommand
@@ -24,10 +24,13 @@ class StateMachine {
         if (isTransitionWithCommand) {
             const [request, transitionOnResolve] = transition[1]
 
-            request()
+            request(data)
                 .then(data => this.data = data)
                 .then(() => this.dispatch(transitionOnResolve))
         }
+
+        if (stateChanger)
+            data = stateChanger(data)
 
         this.currentState = newState
 

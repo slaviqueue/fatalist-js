@@ -5,7 +5,7 @@ describe('StateMachine', () => {
 
     describe('#StateMachine(initialState, statesDefinition)', () => {
         it('should add states ', () => {
-            const stateMachine = new StateMachine('DEFAULT_STATE', {
+            const stateMachine = new StateMachine('DEFAULT_STATE', null, {
                 DEFAULT_STATE: { on: {} },
                 SECOND_STATE: { on: {} },
                 THIRD_STATE: { on: {} }
